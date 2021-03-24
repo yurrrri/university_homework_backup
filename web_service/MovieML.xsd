@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.dongduk.ac.kr/webservices/MovieML/1.0"
+	xmlns:tns="http://www.dongduk.ac.kr/webservices/MovieML/1.0"
+	elementFormDefault="qualified">
+	<include schemaLocation="MovieTypes.xsd"></include>
+
+<!-- 기타 요구사항에 따라, 루트 엘리먼트/영화 목록/장르/등급 분류 체계/제작일/개봉일 엘리먼트는
+global element로 선언하고, 타입은 anonymous local type으로 정의한다.-->
+
+<!-- R1: MovieML 문서는 영화들의 목록과 장르 체계, 영화 등급 체계로 구성된다. -->
+<!-- 루트 엘리먼트 -->
+	<element name="movieCatalog">
+		<complexType>
+			<sequence>
+				<element ref="tns:movies"></element> <!-- 영화목록 -->
+				<element ref="tns:genres"></element> <!-- 장르 체계 -->
+				<element ref="tns:contentRatingSystem"></element> <!-- 영화 등급 체계 -->
+			</sequence>
+		</complexType>
+		<!-- R3: 영화마다 다른 id를 가지므로 id에 key 제약을 정의한다. -->
+		<key name="idKey">
+		<selector xpath="./tns:movies/tns:movie"></selector>
+		<field xpath="@id"></field>
+		</key>
+		<!-- R6: 영화의 장르는 영화 장르 체계에 존재하는 장르에 대응되어야하므로,
+		영화의 genre 엘리먼트에 genreKey를 참조하는 keyref 제약을 정의한다. -->
+		<keyref name="genreRef" refer="tns:genreKey">
+		<selector xpath="./tns:movies/tns:movie/tns:genre"></selector>
+		<field xpath="."></field>
+		</keyref>
+		<!-- R5: 영화의 등급은 영화 등급 체계에 존재하는 장르에 대응되어야 하므로,
+		영화의 certificate 엘리먼트에 certificateKey를 참조하는 keyref 제약을 정의한다. -->
+		<keyref name="certificateRef" refer="tns:certificateKey">
+		<selector xpath="./tns:movies/tns:movie/tns:certificate"></selector>
+		<field xpath="."></field>
+		</keyref>
+		<!-- 기타요구사항에 따라, remakeOf 속성은 원작 영화를 참조해야하므로, 
+		영화의 remakeOf 속성에 idKey를 참조하는 keyref 제약을 정의한다. -->
+		<keyref name="remakeOfRef" refer="tns:idKey">
+		<selector xpath="./tns:movies/tns:movie"></selector>
+		<field xpath="@remakeOf"></field>
+		</keyref>
+	</element>
+	
+	<!-- 영화 목록 -->
+	<element name="movies">
+		<complexType>
+			<sequence>
+				<element name="movie" type="tns:movieType" maxOccurs="unbounded" minOccurs="0"></element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<!-- 장르 체계 -->
+	<element name="genres">
+		<complexType>
+			<sequence>
+				<element name="genre" type="tns:genreType" maxOccurs="unbounded" minOccurs="1"></element>
+			</sequence>
+		</complexType>
+		<!-- R12: 영화 장르 체계는 cid를 식별자로 가지므로, cid 속성에 key 제약을 정의한다. -->
+		<key name="genreKey">
+		<selector xpath=".//tns:genre">
+		</selector>
+		<field xpath="@cid"></field>
+		</key>
+	</element>
+
+<!-- 영화 등급 분류 체계 -->
+<!-- R13:영화 등급 체계는 국가별로 정해진 등급 목록을 가진다. 따라서 국가별로 구분하기 위해 자식엘리먼트로 국가를 선언한다.-->
+	<element name="contentRatingSystem">
+		<complexType>
+			<sequence>
+				<element name="country" maxOccurs="unbounded" minOccurs="1">
+					<complexType>
+						<sequence>
+							<element name="certificate" type="tns:certificateType" maxOccurs="unbounded" minOccurs="1">
+							</element>
+						</sequence>
+						<attribute name="name" type="string" use="required"></attribute>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+		
+		<!-- R13: 각 등급은 이름을 식별자로 가지므로, certificate 엘리먼트의 name에 키 제약을 정의한다.  -->
+		<key name="certificateKey">
+		<selector xpath="./tns:country/tns:certificate"></selector>
+		<field xpath="@name"></field>
+		</key>
+	</element>
+
+	<!-- 제작일 -->
+	<element name="productionDate">
+		<complexType>
+			<attributeGroup ref="tns:dateGroup">
+			</attributeGroup>
+		</complexType>
+	</element>
+	
+	<!-- 개봉일 -->
+	<element name="releaseDate">
+		<complexType>
+			<attributeGroup ref="tns:dateGroup">
+			</attributeGroup>
+		</complexType>
+	</element>
+
+<!-- 기타 요구사항에 따라 영화에 관한 global type을 정의한다. -->
+
+<!-- R2에 언급된 영화 정보를 자식 엘리먼트로 선언한다. -->
+<!-- 주연, 등급, 장르는 필수로 가지되 여러개가 존재할 수 있으므로 minOccurs="1", 
+maxOccurs="unbounded" 속성을 지정한다. -->
+<!-- 개봉일, 줄거리, 평점은 선택적으로 가질 수 있으므로 minOccurs="0", maxOccurs="1" 속성을
+지정한다. -->
+<!-- 리뷰는 추가적으로 가지되 여러개 존재할 수 있으므로 minOccurs="0", maxOccurs="unbounded" 속성을
+지정한다. -->
+	<complexType name="movieType">
+		<sequence>
+			<element name="title" type="string"></element>
+			<element name="director" type="string"></element>
+			<element name="star" type="string" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="producer" type="string"></element>
+			<element ref="tns:productionDate"></element>
+            <element ref="tns:releaseDate" maxOccurs="1" minOccurs="0"></element>
+           <element name="certificate" type="string"
+				maxOccurs="unbounded" minOccurs="1">
+			</element>
+			<!-- R2:장르 정보는 자식 엘리먼트로 표현한다. -->
+			<element name="genre" type="string" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="poster" type="tns:posterType"></element>
+			<element name="rating" maxOccurs="1"
+				minOccurs="0" type="tns:ratingType">
+			</element>
+			<element name="plot" type="string" maxOccurs="1"
+				minOccurs="0">
+			</element>
+			<element name="review" type="string" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+		<!-- R2:id와 원작 영화정보는 속성으로 표현한다. 이때 영화는 ID 정보를 필수로 가지므로 use="required" 속성을 지정한다. -->
+		<attribute name="id" type="tns:idType" use="required"></attribute>
+		<!-- R2:리메이크 영화인 경우, 그것의 원작 영화 정보는 추가적으로 가질 수 있으므로 use="optional" 속성을 지정한다. -->
+		<attribute name="remakeOf" type="string" use="optional"></attribute>
+	</complexType>
+
+<!-- 기타 요구사항에 따라, vod영화와 단편 vod영화는 영화 타입의 다형성을 이용할 수 있도록 정의한다.-->
+<!-- R8:vod 영화는 일반 영화 정보 외에 추가적으로 가격, 파일형식, 파일크기, 상영시간이 존재하므로
+기반이 되는 movieType에 위의 네 가지 엘리먼트들을 추가하여 확장한다. -->
+	<complexType name="vodMovieType">
+		<complexContent>
+			<extension base="tns:movieType">
+				<sequence>
+					<element name="price" type="tns:priceType"></element>
+					<element name="format" type="tns:fileformatType"></element>
+					<element name="size" type="tns:filesizeType"></element>
+					<element name="length" type="positiveInteger"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<!-- R11: voD 영화 중 단편 영화는 기존 영화의 몇몇 자식 엘리먼트의 빈도수 혹은 값이 다르므로 다형성을 이용하여
+	기반 complex type의 모든 자식 엘리먼트를 재선언해야한다. -->
+	<complexType name="vodShortFilmType">
+		<complexContent>
+            <restriction base="tns:vodMovieType">
+            	<sequence>
+					<element name="title" type="string"></element>
+					<element name="director" type="string"></element>
+					<element name="star" type="string" maxOccurs="unbounded"
+						minOccurs="1">
+					</element>
+					<element name="producer" type="string"></element>
+					<element ref="tns:productionDate"></element>
+					<!-- 개봉일이 존재할 수 없다. -->
+		            <element ref="tns:releaseDate" maxOccurs="0" minOccurs="0"></element>
+		           <element name="certificate" type="string"
+						maxOccurs="unbounded" minOccurs="1">
+					</element>
+					<element name="genre" type="string" maxOccurs="unbounded"
+						minOccurs="1">
+					</element>
+					<element name="poster" type="tns:posterType"></element>
+					<element name="rating" maxOccurs="1"
+						minOccurs="0" type="tns:ratingType">
+					</element>
+					<element name="plot" type="string" maxOccurs="1"
+						minOccurs="0">
+					</element>
+					<element name="review" type="string" maxOccurs="unbounded"
+						minOccurs="0">
+					</element>
+					<element name="price" type="tns:priceType"></element>
+					<!-- 파일 형식은 WMV만 가능하도록 포맷 타입의 값을 제한한다. -->
+					<element name="format">
+						<simpleType>
+							<restriction base="tns:fileformatType">
+								<enumeration value="WMV"></enumeration>
+							</restriction>
+						</simpleType>
+					</element>
+					<element name="size" type="tns:filesizeType"></element>
+					<!-- vod 단편영화는 상영 시간이 최대 45분이다. -->
+					<element name="length">
+						<simpleType>
+							<restriction base="positiveInteger">
+								<maxInclusive value="45"></maxInclusive>
+							</restriction>
+						</simpleType>
+					</element>
+            	</sequence>
+            </restriction>
+		</complexContent>
+	</complexType>
+	
+	<!-- 기타요구사항에 따라, 장르와 등급에 관한 global type을 정의한다. -->
+	
+	<!-- R12: 장르는 이름과 식별자(cid)를 가진다. -->
+	<!-- 다시 세부 장르로 나뉠 수 있으므로, 자식 엘리먼트를 선언하고, 그 엘리먼트의 타입을 자기 자신으로 지정한다. -->
+	<complexType name="genreType">
+		<sequence>
+			<element name="genre" type="tns:genreType" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+		<attribute name="cid" type="string" use="required"></attribute>
+		<attribute name="name" type="string" use="required"></attribute>
+	</complexType>
+
+	<complexType name="certificateType">
+		<simpleContent>
+			<extension base="string">
+				<attribute name="name" type="string" use="required"></attribute>
+			</extension>
+		</simpleContent>
+	</complexType>
+</schema>

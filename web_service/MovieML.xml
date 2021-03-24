@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<movieCatalog xmlns="http://www.dongduk.ac.kr/webservices/MovieML/1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.dongduk.ac.kr/webservices/MovieML/1.0 MovieML.xsd">
+	<movies>
+	<!-- 영화의 id는 m:xx-xxx(x는 숫자)의 형식을 사용하고, 영화마다 서로 다른 값을 가진다. -->
+		<movie id="m:12-345" xsi:type="movieType">
+			<title>기생충</title>
+			<director>봉준호</director>
+			<star>송강호</star>
+			<star>이선균</star> 
+			<star>조여정</star> 
+			<producer>바른손</producer> 
+			<productionDate year="2018" month="12" day="01" /> <!-- 영화의 제작일과 개봉일은 년, 월, 일을 나타내는 속성을 가지고
+																	년도는 1900~2020, 월은 01~12, 일은 01~31 사이의 값을 가진다. -->
+			<releaseDate year="2019" month="05" day="30" />
+			<certificate>K:15</certificate> <!-- certificate값이 등급체계에 존재하지 않으면 오류 발생--> 
+			<genre>c02-2</genre> <!-- genre 값이 장르 체계에 존재하지 않으면 오류 발생 -->
+			<poster src="parasite.jpg" type="jpeg" />
+			<rating>4.4</rating> <!-- 평점은 1.0~5.0사이의 실수 값을 가진다. -->
+			<review>봉준호 송강호 조합 = 성공조합</review> 
+			<review>사회 구조에 대해 생각해볼 수 있었던 영화</review>
+		</movie>
+		
+		<movie id="m:23-697" xsi:type="vodMovieType" remakeOf="m:12-345"> <!-- remakeOf의 값이 이미 있는 영화의 ID가 아니면 오류 발생 -->
+			<title>parasite</title> 
+			<director>tom lee</director> 
+			<star>Tom Cruz</star> 
+			<star>George MacKay</star> 
+			<producer>T-O Pictures</producer> 
+			<productionDate year="2019" month="03" day="01" /> 
+			<releaseDate year="2020" month="02" day="19" /> 
+			<certificate>US:PG-13</certificate> 
+			<certificate>K:12</certificate> 
+			<genre>c01-1</genre> 
+			<genre>c04</genre>
+			<poster src="parasite.gif" type="gif" /> 
+			<rating>4.2</rating> 
+			<!-- 아래는 vodMovie에만 존재하는 정보 --> 
+			<price>  <!-- 가격은 정가와 할인가로 구분되고 둘다 양수 값을 가진다. 여기서 통화 속성이 생략되었으므로 통화는 원화로 간주한다. -->
+				<listPrice>9000</listPrice> 
+				<discountPrice>7500</discountPrice> 
+			</price> 
+			<format>MKV</format> <!--파일 형식은 AVI, MP4, MKV, WMV 중 하나의 값을 가진다.  -->
+			<size unit="GB">2.33</size>  <!-- 파일크기는 실수값이며 단위를 표시하는 속성을 가진다. -->
+			<length>120</length> 
+		</movie>
+		
+		<movie id="m:73-392" xsi:type="vodShortFilmType"> 
+			<title>겨울왕국 2</title> 
+			<director>크리스 벅</director> 
+			<star>크리스틴 벨</star> 
+			<star>이디나 멘젤</star> 
+			<producer>Walt Disney</producer> 
+			<productionDate year="2018" month="11" day="01" /> 
+<!-- <releaseDate year="2019" month="11" day="21" /> --> <!-- 단편 vod 영화는 개봉일이 존재할 수 없다 --> 
+			<certificate>US:G</certificate> 
+			<certificate>K:All</certificate> 
+			<genre>c06-3</genre> 
+			<poster src="frozen2.jpg" type="jpeg" /> 
+			<rating>4.4</rating> 
+			<price currency="dollar"> 
+				<listPrice>12000</listPrice> 
+				<discountPrice>11000</discountPrice> 
+			</price> 
+			<format>WMV</format> <!-- 단편 vod는 파일형식이 WMV만 가능 --> 
+			<size unit="GB">4.5</size> 
+			<length>43</length> <!-- 단편 vod의 상영 시간은 45분 이내만 가능 --> 
+		</movie>
+	</movies>
+	
+	<genres> <!-- 각 장르는 이름뿐만 아니라 식별자(cid)를 가진다. cid 중복 불가 -->
+			<!-- 각 장르는 다시 세부 장르로 나뉠 수 있다. --> 
+		<genre cid="c01" name="드라마"> 
+			<genre cid="c01-1" name="역사" /> 
+			<genre cid="c01-2" name="가족" /> 
+			<genre cid="c01-3" name="멜로" /> 
+		</genre> 
+		<genre cid="c02" name="코미디"> 
+			<genre cid="c02-1" name="로맨틱 코미디" /> 
+			<genre cid="c02-2" name="블랙 코미디" /> 
+		</genre> 
+		<genre cid="c03" name="다큐멘터리" /> 
+		<genre cid="c04" name="공포" />
+		<genre cid="c05" name="액션"/>
+		<genre cid="c06" name="애니메이션">
+			<genre cid="c06-1" name="한국 애니메이션"/>
+			<genre cid="c06-2" name="일본 애니메이션"/>
+			<genre cid="c06-3" name="미국 애니메이션"/>
+		</genre>
+	 </genres>
+	 
+	<contentRatingSystem> <!-- 영화 등급 체계는 각 국가별로 정해진 등급 목록을 가진다.
+								이름을 식별자로 가지며 certificate name 중복 불가 --> 
+		<country name="United States"> 
+			<certificate name="US:G">General Audiences</certificate> 
+			<certificate name="US:PG-13">Parents Strongly Cautioned</certificate> 
+			<certificate name="US:R">Restricted</certificate>
+			<certificate name="US:NC-17">Adults Only</certificate> 
+		</country> 
+		<country name="South Korea"> 
+			<certificate name="K:All">전체 관람가</certificate> 
+			<certificate name="K:12">12세 이상 관람가</certificate> 
+			<certificate name="K:15">15세 이상 관람가</certificate> 
+			<certificate name="K:R">청소년 관람불가</certificate> 
+			<certificate name="K:Restricted_Screening">제한상영가</certificate> 
+		</country> 
+		<country name="Japan">
+			<certificate name="G">전체 관람가</certificate>
+			<certificate name="PG12">12세 이상 관람가</certificate>
+			<certificate name="R15+">15세 이상 관람가</certificate>
+			<certificate name="R18+">18세 이상 관람가</certificate>
+		</country>
+	</contentRatingSystem>
+	</movieCatalog>
+	

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bookCatalog SYSTEM "BookML.dtd" [
+<!--  내부 일반 entity 사용 -->
+     <!ENTITY kr "한국">
+]>
+
+<bookCatalog>
+  <bookList>
+  <!--  도서의 식별자로 ISBN10 사용 -->
+  	<book id="isbn-895275394-1" categories="c101-1-1">
+  		<title>날씨가 좋으면 찾아가겠어요</title>
+  		<author>이도우</author>
+  		<publisher>시공사</publisher>
+  		<!--  출판일의 연도는 1900~200 사이의 값을 갖고, 월과 일은 01~12, 01~31 사이의 값을 갖게 입력한다. -->
+  		<publishDate year="2018" month="05" day="03"/>
+  		<price>
+  			<listPrice>12000</listPrice>
+  			<discountPrice>10800</discountPrice>
+  		</price>
+  		<discountRate>10</discountRate>
+  		<pages>239</pages>
+  		<coverImage src="http://image.yes24.com/goods/86895523/800x0"
+  					type="jpeg"/>
+  		<plot>
+  		<!--  built-in entity 사용 -->
+  		&quot;겨울이 좋은 이유는 그저 한 가지
+		내 창을 가리던 나뭇잎들이 떨어져
+		건너편 당신의 창이 보인다는 것&quot;
+
+		해원은 그림을 가르치던 일을 그만두고 호두하우스 펜션을 운영하는 이모 곁에서 한동안 지내기로 한다. 
+		노부부가 살던 기와집이 작은 서점 &apos;굿나잇책방&apos;으로 바뀐 것을 보고 의아해한다. &apos;이 시골에 서점…?&apos;
+		논두렁 스케이트장에서 일하던 은섭은 그의 닫힌 책방을 기웃거리는 해원을 보고 멈칫 놀란다. 
+		언젠가 그에게 무심히 겨울 들판의 마시멜로 이름을 묻던 이웃집 그녀가 돌아왔으니까….
+  		</plot>
+  		<review>
+  		책방을 실제 운영하다 보면 많은 책과 그보다 더 많은 사람들을 만난다. 
+  		책방은 책과 사람들을 통해 생각보다 흥미로운 이야기들이 많이 생기는데, 이 책은 책방을 운영하지 않은 사람들에게도 그런 벅찬 경험들을 안겨준다.
+  		 책과 함께 인생을 보내고 싶지만 현실에 묶여 있는 사람들에게 여름밤의 꿈을 선사하는 책이다.
+  		</review>
+  	</book>
+  	<!-- 도서 식별자로 isbn13 사용 -->
+  	<eBook id="isbn-979-118711984-5" categories="c102-1-1">
+  		<title>나는 나로 살기로 했다</title>
+  		<author>김수현</author>
+  		<publisher>마음의 곁</publisher>
+  		<publishDate year="2016" month="11" day="25"/>
+  		<price>
+  			<listPrice>18000</listPrice>
+  			<discountPrice>15400</discountPrice>
+  		</price>
+  		<discountRate>20</discountRate>
+  		<pages>288</pages>
+  		<revisionDate year="2017" month="03" day="03"/>
+  		<coverImage src="http://image.yes24.com/goods/33529377/800x0"
+  					type="jpeg"/>
+  		<plot>
+  		진짜 &apos;나&apos;로 살기 위한 뜨거운 조언들!
+  		어른이 처음인 당신을 위한 단단한 위로들!
+		&quot;어른이 되어보니 세상은 냉담한 곳이었다.&quot; 김수현은 책을 펴내면서 이런 말을 했다. 
+		부조리가 넘쳐났고, 사람들은 불필요할 정도로 서로에게 선을 긋고, 평범한 이들조차 기회가 있으면 차별과 멸시를 즐긴다. 
+		우리는 자본주의 사회에서 철저한 갑과 을이 되어 살아가고 있다. 그것이 우리가 이토록 발버둥 치며 살고 있는 세상이다.
+		이 책은 우리가 온전한 &apos;나&apos;로 살아가기 위해 무엇이 필요한지 말해준다. 
+		돈 많고 잘나가는 타인의 SNS를 훔쳐보며 비참해질 필요 없고, 스스로에게 변명하고 모두에게 이해받으려 애쓰지 말라고 이야기한다. 
+		불안하다고 무작정 열심히 할 필요 없고, 세상의 정답에 굴복하지 말라고 응원한다. 
+		인생의 지나가는 사람들에게 더 이상 상처받지 말고, 누군가의 말에 흔들리지 말고, 자신만의 문제라고 착각하지 말라고. 
+		우리에게 가장 필요한 말, 나답게 살라고 말한다.
+  		</plot>
+  		<review>
+  		예전에 비해 사람들의 가치관이 많이 변하고, 환경도 많이 변해 '나'로 살아가는 일이 쉬워지긴 했지만, 
+  		복잡다변한 세상에서 나를 찾는 일은 더욱 어려워진 것 같다. 사람들은 사람들에게 서로 영향을 받는다. 
+  		사회 구성원은 개인 혼자 살 수 없는 공동체적 성격도 띄고 있다. 
+  		스스로 해결하는 일들의 많은 부분이 스스로가 아닌 주변의 뒷받침 없이는 어려운 일들도 많다. 
+  		예전에 어떤 어르신께서 지하철을 타면 모두 스마트 폰을 보는 세상에서 어떤 젊은이가 철학이 있겠냐고 푸념하던 기억이 난다.
+  		 그 젊은이에 나도 포함되어 있을 것이다. 
+  		 누군가는 이런 어르신의 말을 꼰대라고 생각할 수도 있겠지만 그 얘기를 듣고 가만히 생각해보니 정말 요즘 생각을 하고 살 시간이 없었다.
+  		 내가 나를 모른다는 것은 정체성을 위협하는 일이다.
+  		  타인의 SNS를 엿보거나 타인에게 보여주기식으로 꾸민 나의 SNS는 정말 나를 나타내지 않는다. 
+  		  저자는 그런 타인들을 훔쳐보며 비참할 필요도 없고, 모두에게 이해받고자 애쓸 필요가 없다고 말한다. 
+  		  너무나도 불필요하게 불안해하고, 상처받고, 진정 나를 위해 살고 있는 것인지 타인에게 잘 보이기 위해 살고 있는 것인지 
+  		  스스로에게 되 물을 필요가 있다.
+  		</review>
+  		<format value="PDF"/>
+  		<size unit="MB">300</size>
+  		<period>14</period>
+  	</eBook>
+  	<eBook_new id="isbn-118985687-5" categories="c103-1-1">
+  		<title>사장을 위한 MBA 필독서</title>
+  		<originalTitle>社長のための50のMBA必読書</originalTitle>
+  		<author>나가이 다카히사</author>
+  		<translator>김정환</translator>
+  		<publisher>센시오</publisher>
+  		<publishDate year="2020" month="03" day="30"/>
+  		<!--  신간 전자책은 개정일(revisionDate)가 존재할 수 없다. -->
+  		<price>
+  			<listPrice>20000</listPrice>
+  			<discountPrice>18000</discountPrice>
+  		</price>
+  		<!--  신간 전자책은 할인율이 10% 이하여야 한다. -->
+  		<discountRate>10</discountRate>
+  		<pages>288</pages>
+  		<plot>
+  		&quot;세계 엘리트들이 읽는 MBA 필독서 50권을 한 권에&quot;
+  		세계의 비즈니스 엘리트들이 앞 다퉈 읽고 있는 경영 명저 50권을 한 권에 담은 책이 출간됐다. 
+  		소개된 50권은 전 세계 최고 MBA가 꼽는 필독서로 수많은 경영자에게 검증받은 책이다. 
+  		저자는 이 50권의 책에서 핵심만을 뽑아 아주 쉽고 간결하게 전달한다. 
+  		책 구성도 기업에서 가장 많이 사용하는 전략, 마케팅, 혁신, 리더십과 조직, 고객, 신사업, 사람 등 
+  		6개 주제로 나누어 필요한 부분만 읽을 수 있도록 했다. 한 권당 5~10분이면 충분하다.
+  		</plot>
+  		<review>
+  		MBA 필독서라 불리는 경영의 명저(名著)에 대한 접근이 쉽지 않았던 이들에게 단비처럼 반가운 책이 출간됐다. 
+  		마이클 포터, 게리 해멀, 제프리 무어, 클레이튼 크리스텐슨, 세스 고딘, 톰 피터스, 짐 콜린스, 존 코터, 
+  		로버트 치알디니 등 세계가 추앙하는 경영 구루들의 지혜를 한 곳에서 만날 수 있는 이 책은, 
+  		바쁜 업무에 치여 시간을 내기 힘든 직장인과 기업 리더들이 찾던 ‘현장의 고충을 해결하기 위해 꼭 필요한’ 든든한 경영서다.
+  		</review>
+  		<format value="PDF"/>
+  		<size unit="MB">200</size>
+  		<!--  신간 전자책은 이용기간이 최대 2주일이다. 따라서 2주일 이하로 입력해야한다 -->
+  		<period>10</period>
+  	</eBook_new>
+  </bookList>
+  <bookCategory>
+    <category cid="c101" name="문학">
+    	<category cid="c101-1" name="소설">
+    		<category cid="c101-1-1" name="&kr; 소설">
+    		</category>
+    		<category cid="c101-1-2" name="외국 소설">
+    		</category>
+    	</category>
+    </category>
+    <category cid="c102" name="인문">
+    	<category cid="c102-1" name="에세이">
+    		<category cid="c102-1-1" name="&kr; 에세이"/>
+    	</category>
+    	<category cid="c102-2" name="심리학" />
+    </category>
+    <category cid="c103" name="사회">
+    	<category cid="c103-1" name="경영">
+    		<category cid="c103-1-1" name="경영 일반">
+    		</category>
+    		<category cid="c103-1-2" name="마케팅">
+    		</category>
+    	</category>
+    </category>
+  </bookCategory>
+</bookCatalog>

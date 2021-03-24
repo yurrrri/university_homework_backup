@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 기타 요구사항에 따라 target namespace 및 elementformdefault를 bookML.xsd와 동일하게 설정한다. -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.dongduk.ac.kr/BookML/2.0"
+	xmlns:tns="http://www.dongduk.ac.kr/BookML/2.0"
+	elementFormDefault="qualified">
+
+	<!-- 기타 요구사항에 따라 bookTypes에 별도로 도서의 ID, 가격, 통화, 할인율, 페이지수 등의 타입들을 정의한다.-->
+	<!-- R3:isbn은 특정한 ISBN10이나 ISBN13 형식을 사용하므로 이를 정규식으로 지정한다. -->
+    <simpleType name="isbnType">
+    	<restriction base="string">
+    		<pattern value="\d{9}-\d|(978|979)-\d{9}-\d"></pattern>
+    	</restriction>
+    </simpleType>
+
+	<!-- R5:가격은 정가(listPrice), 할인가(discountPrice)로 구분된다.
+	양수 값을 가지므로 minInclusive 속성으로 1을 지정한다. 
+	이때 통화 원, 달러, 엔 타입을 별도의 currencyType으로 지정하고
+	통화가 생략될 경우에 원화로 간주하므로 속성의 default값으로 "won"을 지정한다. -->
+    <complexType name="priceType">
+    	<sequence>
+    		<element name="listPrice">
+    			<simpleType>
+    				<restriction base="int">
+    					<minInclusive value="1"></minInclusive>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="discountPrice">
+    			<simpleType>
+    				<restriction base="int">
+    					<minExclusive value="1"></minExclusive>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    	<attribute name="currency" type="tns:currencyType" default="won"></attribute>
+    </complexType>
+    
+<!-- R6: 페이지수는 1부터 1000까지이므로 minInclusive값으로 1, maxInclusve값으로 1000을 지정한다. -->
+    <simpleType name="pagesType">
+    	<restriction base="int">
+    		<minInclusive value="1"></minInclusive>
+    		<maxInclusive value="1000"></maxInclusive>
+    	</restriction>
+    </simpleType>
+
+
+	<!-- R5: 원, 달러, 엔의 통화 타입을 별도로 정의하여 priceType의 속성으로 지정한다. -->
+    <simpleType name="currencyType">
+    	<restriction base="string">
+    		<enumeration value="won"></enumeration>
+    		<enumeration value="dollar"></enumeration>
+    		<enumeration value="yen"></enumeration>
+    	</restriction>
+    </simpleType>
+
+<!-- 기타요구사항에 따라, 출판일과 개정일은 속성이 중복되므로 이 속성을 그룹으로 정의하여 재사용하고자 한다. -->
+    <attributeGroup name="dateGroup">
+    <!-- R4: 도서의 출판일과 개정일은 연, 월, 일로 구성된다. -->
+    	<attribute name="year">
+    		<simpleType>
+    			<restriction base="string">
+    <!-- 연도는 1900-2020 사이의 값을 가지도록 정규식을 지정한다. -->
+    				<pattern value="19\d{2}|20(0|1)\d|2020"></pattern>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="month">
+    		<simpleType>
+    			<restriction base="string">
+    <!-- 월은 01~12 사이의 값을 가지도록 정규식을 지정한다. -->
+    				<pattern value="0[1-9]|1[0-2]"></pattern>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="day">
+    		<simpleType>
+    			<restriction base="string">
+    <!-- 일은 01~31 사이의 값을 가지도록 정규식을 지정한다. -->
+    				<pattern value="0[1-9]|[12]\d|3[0-1]"></pattern>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </attributeGroup>
+    
+    <!-- R10:전자책의 파일 형식은 EPUB, PDF, StreamText, StreamImage 중 하나의 값을 가진다.
+    이를 enumeration 속성값으로 지정하여 값을 제한한다. -->
+    <simpleType name="formatType">
+    	<restriction base="string">
+    		<enumeration value="EPUB"></enumeration>
+    		<enumeration value="PDF"></enumeration>
+    		<enumeration value="StreamText"></enumeration>
+    		<enumeration value="StreamImage"></enumeration>
+    	</restriction>
+    </simpleType>
+
+<!-- R7:표지그림에서 사용할 외부의 이미지 파일을 사용하기 위해 notation을 선언한다.
+	포맷(jpeg, gif, png)과 이를 출력할 응용 프로그램을 system 속성으로 지정한다. 
+	notation을 사용하기 위해 ImageType을 NOTATION 기반으로 하여 생성한 후,
+	notation에서 선언한 포맷을 사용하기 위해 enumeration 속성으로 값(jpeg, gif, png)을 제한한다.-->
+    <notation name="jpeg" public="image/jpeg" system="mspaint.exe"/>
+    <notation name="gif" public="image/gif" system="photoshop.exe"/>
+    <notation name="png" public="image/png" system="photoshop.exe"/>
+
+    <simpleType name="ImageType">
+    	<restriction base="NOTATION">
+    		<enumeration value="tns:jpeg"></enumeration>
+    		<enumeration value="tns:gif"></enumeration>
+    		<enumeration value="tns:png"></enumeration>
+    	</restriction>
+    </simpleType>
+    
+    <!-- R10:전자책의 파일 크기는 실수 값이므로 이를 restriction 속성을 사용하여 실수값으로 제한한다. -->
+    <simpleType name="sizeType">
+    	<restriction base="float"></restriction>
+    </simpleType>
+
+	<!-- R10: 전자책의 파일 크기를 선언할 때 사용하는 단위 타입을 선언한다.
+	KB, MB, GB 중 하나를 사용할 수 있게 하기 위해 enumeration 속성으로 값을 제한한다. -->
+    <simpleType name="unitType">
+    	<restriction base="string">
+    		<enumeration value="KB"></enumeration>
+    		<enumeration value="MB"></enumeration>
+    		<enumeration value="GB"></enumeration>
+    	</restriction>
+    </simpleType>
+
+<!-- R6: 할인율은 0부터 80까지이므로 minInclusive값으로 0, maxInclusve값으로 80을 지정한다. -->
+    <simpleType name="discountRateType">
+    	<restriction base="int">
+    		<minInclusive value="0"></minInclusive>
+    		<maxInclusive value="80"></maxInclusive>
+    	</restriction>
+    </simpleType>
+
+	<!-- R10: 이용기간은 날짜 수로 정의된다. 즉 최소 1일 이상이므로
+	minInclusive 속성 값을 1로 지정한다. -->
+    <simpleType name="periodType">
+    	<restriction base="int">
+    		<minInclusive value="1"></minInclusive>
+    	</restriction>
+    </simpleType>
+
+</schema>
