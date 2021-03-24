@@ -6,4 +6,4 @@
 ### [인터넷 프로그래밍(HTML)](https://github.com/yurrrri/university_homework_backup/tree/main/web_service))
 ### [웹서비스](https://github.com/yurrrri/university_homework_backup/tree/main/web_service)
 ### [시스템 프로그래밍(Linux)](https://github.com/yurrrri/university_homework_backup/tree/main/system_programming)
-### [문제해결기법(C)]((https://github.com/yurrrri/university_homework_backup/tree/main/problem_solution)
+### [문제해결기법(C)](https://github.com/yurrrri/university_homework_backup/tree/main/problem_solution)
